@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scenario name="Basic SIP Call">
+
+  <!-- Send INVITE -->
+  <send>
+    <![CDATA[
+INVITE sip:[service]@[remote_ip]:[remote_port] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch]
+From: "SIPp" <sip:sipp@[local_ip]>;tag=[call_number]
+To: <sip:[service]@[remote_ip]>
+Call-ID: [call_id]
+CSeq: 1 INVITE
+Contact: <sip:sipp@[local_ip]:[local_port]>
+Max-Forwards: 70
+Content-Length: 0
+    ]]>
+  </send>
+
+  <!-- Expect 100 Trying (optional) -->
+  <recv response="100" optional="true"/>
+
+  <!-- Expect 180 Ringing (optional) -->
+  <recv response="180" optional="true"/>
+
+  <!-- Expect call answered -->
+  <recv response="200"/>
+
+  <!-- Send ACK -->
+  <send>
+    <![CDATA[
+ACK sip:[service]@[remote_ip]:[remote_port] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch]
+From: "SIPp" <sip:sipp@[local_ip]>;tag=[call_number]
+To: <sip:[service]@[remote_ip]>
+Call-ID: [call_id]
+CSeq: 1 ACK
+Content-Length: 0
+    ]]>
+  </send>
+
+  <!-- Stay on call for 5 seconds -->
+  <pause milliseconds="5000"/>
+
+  <!-- Hang up -->
+  <send>
+    <![CDATA[
+BYE sip:[service]@[remote_ip]:[remote_port] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch]
+From: "SIPp" <sip:sipp@[local_ip]>;tag=[call_number]
+To: <sip:[service]@[remote_ip]>
+Call-ID: [call_id]
+CSeq: 2 BYE
+Content-Length: 0
+    ]]>
+  </send>
+
+  <recv response="200"/>
+
+</scenario>
