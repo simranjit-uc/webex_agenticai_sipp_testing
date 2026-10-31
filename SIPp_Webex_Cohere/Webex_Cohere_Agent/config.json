@@ -1,0 +1,9 @@
+{
+  "CUBE_USER" : "your-cube-ssh-username",
+  "CUBE_PASS" : "your-cube-ssh-password",
+  "SIPP_LOCAL_IP" : "ip-of-sipp-host",
+  "LLM_PROVIDER" : "cohere",
+  "LLM_API_KEY" : "your-cohere-api-key", 
+  "WEBEX_BOT_TOKEN" : "your-webex-bot-token",
+  "BOT_EMAIL" : "your-bot-username@webex.bot",
+}
