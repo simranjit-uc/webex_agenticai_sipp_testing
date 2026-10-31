@@ -179,6 +179,7 @@ def format_diagnosis(result: dict) -> str:
 # ******************************* Webhook *******************************
 
 
+@markcoroutinefunction
 @csrf_exempt
 async def chat_webhook(request):
     """
@@ -186,7 +187,6 @@ async def chat_webhook(request):
     SIPp sequence, and posts the diagnosis back to Webex."""
     
     payload = json.loads(request.body)
-    print(payload)
     message_id = payload["data"]["id"]
     room_id = payload["data"]["roomId"]
 
@@ -310,6 +310,3 @@ async def chat_webhook(request):
     logger.info(f"Diagnosis posted to Webex for extension {extension}")
 
     return JsonResponse({"status": "ok"})
-
-
-markcoroutinefunction(chat_webhook)
